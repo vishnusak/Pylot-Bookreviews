@@ -110,6 +110,7 @@ main{
           }
             .book_rating>input[type='radio']:default{
               display: none;
+              opacity: 0;
             }
       .right>form>input[type='submit']{
         display: block;
