@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Book Review | Add Book</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/addbook.css') }}">
+    <!-- <link rel="stylesheet" href="..\static\css\common.css"> -->
+    <!-- <link rel="stylesheet" href="..\static\css\addbook.css"> -->
+  </head>
+  <body>
+    <header>
+      <h1>Book Reviews</h1>
+      {% if session['user_id'] %}
+        <h3><a href="/books">Home</a></h3>
+        <h3><a href="/books/add">Add Book and Review</a></h3>
+        <h3><a href="/logout">Log Out</a></h3>
+      {% endif %}
+    </header>
+    <main>
+      <h2>Add a New Book Title and a Review</h2>
+      <div class="lreg">
+        <form class="add" action="/books/add" method="post">
+          <fieldset>
+            {% if session['err']['title'] %}
+              <p class="err">{{ session['err']['title'] }}</p>
+              <label>
+                <p>Book Title: </p><input type="text" name="title">
+              </label>
+            {% else %}
+              <label>
+                <p>Book Title: </p><input type="text" name="title" value="{{ session['form']['title'] }}">
+              </label>
+            {% endif %}
+
+            <label>
+              <p>Author </p>
+              {% if session['err']['author'] %}
+                <span class="err">{{ session['err']['author'] }}</span>
+              {% endif %}
+            </label>
+
+            <label class="sub">
+              <p>Choose from the list: </p>
+              <select name="author_select">
+                <option value='' selected></option>
+                {% if session['authors'] %}
+                  {% for author in session['authors'] %}
+                    <option value='{{ author['author'] }}'>{{ author['author'] }}</option>
+                  {% endfor %}
+                {% endif %}
+              </select>
+            </label>
+
+            {% if not session['err']['author'] %}
+              <label class="sub">
+                <p>Or add a new author: </p><input type="text" name="author" value="{{ session['form']['author'] }}">
+              </label>
+            {% else %}
+              <label class="sub">
+                <p>Or add a new author: </p><input type="text" name="author">
+              </label>
+            {% endif %}
+
+            {% if session['err']['review'] %}
+              <p class="err">{{ session['err']['review'] }}</p>
+              <label>
+                <p>Review: </p><textarea name="review"></textarea>
+              </label>
+            {% else %}
+              <label>
+                <p>Review: </p><textarea name="review">{{ session['form']['review'] }}</textarea>
+              </label>
+            {% endif %}
+
+            {% if session['err']['rating'] %}
+              <p class="err">{{ session['err']['rating'] }}</p>
+            {% endif %}
+            <label>
+              <p>Rating: </p>
+              <div class="rating">
+                <input type="radio" name="rating" value="" checked>
+                {% for x in range(1,6) %}
+                <input type="radio" name="rating" value="{{ x }}"><span>{{ x }}</span>
+                {% endfor %}
+              </div>
+            </label>
+            <input type="submit" value="Add Book and Review">
+          </fieldset>
+        </form>
+      </div>
+    </main>
+  </body>
+</html>

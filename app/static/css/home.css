@@ -1,0 +1,72 @@
+main{
+  position: absolute;
+  top: 6vh;
+  left: 5vw;
+  width: 90%;
+  height: 94vh;
+  background-color: rgb(240, 240, 240);
+  /*overflow-y: auto;*/
+}
+  main>h2{
+    text-align: center;
+    margin: 2vh auto;
+  }
+  .lreg{
+    display: flex;
+    justify-content: space-around;
+  }
+    .left, .right{
+      width: 50%;
+      padding: 1vh 1vw;
+    }
+    .left{
+    }
+      .left>h3, .right>h3{
+        text-align: center;
+      }
+      .left .review{
+        height: 77vh;
+        overflow-y: auto;
+      }
+      .left .review>*{
+        margin: 1vh 0 1vh 2vw;
+        font-size: 1rem;
+      }
+      .left .review>a{
+        margin-left: 0;
+        display: block;
+        text-align: left;
+        font-size: 1.2rem;
+      }
+      .left .review .rating>span{
+        background-color: rgb(34, 34, 34);
+        border-radius: 1rem;
+        padding: 0.25vh 0.5vw;
+      }
+      .left .selected{
+        color: gold;
+        font-size: 1.3rem;
+      }
+      .left .notselected{
+        color: rgb(240, 240, 240);
+        font-size: 1.3rem;
+      }
+      .left em{
+        text-decoration: underline;
+        margin-right: 1vw;
+        font-weight: bold;
+      }
+    .right>div{
+      border: 1px solid rgb(34, 34, 34);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      font-size: 1.2rem;
+      text-align: center;
+      height: 50vh;
+      padding: 1vh 1vw;
+    }
+      .right>div>a{
+        margin: 1vh 0;
+        font-weight: bold;
+      }

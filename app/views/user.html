@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Book Review | User</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/user.css') }}">
+    <!-- <link rel="stylesheet" href="..\static\css\common.css"> -->
+    <!-- <link rel="stylesheet" href="..\static\css\user.css"> -->
+  </head>
+  <body>
+    <header>
+      <h1>Book Reviews</h1>
+      {% if session['user_id'] %}
+        <h3><a href="/books">Home</a></h3>
+        <h3><a href="/books/add">Add Book and Review</a></h3>
+        <h3><a href="/logout">Log Out</a></h3>
+      {% endif %}
+    </header>
+    <main>
+      <h2>User Alias: {{ session['profile']['alias'] }}</h2>
+      <div class="lreg">
+        <form class="user">
+          <fieldset>
+            <label>
+              <p>Name: </p><input type="text" name="name" value="{{ session['profile']['name'] }}" readonly>
+            </label>
+            <label>
+              <p>eMail: </p><input type="text" name="email" value="{{ session['profile']['email'] }}" readonly>
+            </label>
+            <label>
+              <p>Total Reviews: </p><input type="text" name="reviews" value="{{ session['profile']['reviews'] }}" readonly>
+            </label>
+          </fieldset>
+        </form>
+      </div>
+      <h2>Posted reviews on the following books:</h2>
+      {% for book in session['profile']['books'] %}
+        <a href="/books/{{ book[0] }}">{{ book[2] }}</a>
+      {% endfor %}
+    </main>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Book Review | Review</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Coda" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/common.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/book.css') }}">
+    <!-- <link rel="stylesheet" href="..\static\css\common.css"> -->
+    <!-- <link rel="stylesheet" href="..\static\css\book.css"> -->
+  </head>
+  <body>
+    <header>
+      <h1>Book Reviews</h1>
+      {% if session['user_id'] %}
+        <h3><a href="/books">Home</a></h3>
+        <h3><a href="/books/add">Add Book and Review</a></h3>
+        <h3><a href="/logout">Log Out</a></h3>
+      {% endif %}
+    </header>
+    <main>
+      <h2>{{ session['book']['title'] }}</h2>
+      <h3>{{ session['book']['author'] }}</h3>
+      <div class="lreg">
+        <div class="left">
+          <h3>Reviews:</h3>
+          <hr />
+          <div class="review">
+            {% for review in session['book']['reviews'] %}
+              <div class="rating">
+                <em>Rating: </em>
+                <div>
+                  <span>
+                    {% for x in range(review['book_rating']) %}
+                      <span class="selected">&#9733;</span>
+                    {% endfor %}
+                    {% for x in range(5 - review['book_rating']) %}
+                      <span class="notselected">&#9734;</span>
+                    {% endfor %}
+                  </span>
+                {% if session['user_id'] == review['user_id'] %}
+                  <a href="/reviews/remove/{{ review['review_id'] }}">Delete Review</a>
+                {% endif %}
+                </div>
+              </div>
+              <p><em><a href="/users/{{ review['user_id'] }}">{{ review['user_alias'] }}</a> says: </em>{{ review['review'] }}</p>
+              <p><em>Posted on: </em> {{ review['date'] }}</p>
+              <hr />
+            {% endfor %}
+          </div>
+        </div>
+        <div class="right">
+          <h3>Add a Review:</h3>
+          <form class="book_review" action="/reviews/add/{{ session['book']['id'] }}" method="post">
+
+            {% if session['err']['review'] %}
+              <p class="err">{{ session['err']['review'] }}</p>
+              <label>
+                <p>Review: </p><textarea name="review"></textarea>
+              </label>
+            {% else %}
+              <label>
+                <p>Review: </p><textarea name="review">{{ session['form']['review'] }}</textarea>
+              </label>
+            {% endif %}
+
+            {% if session['err']['rating'] %}
+              <p class="err">{{ session['err']['rating'] }}</p>
+            {% endif %}
+            <label>
+              <p>Rating: </p>
+              <div class="book_rating">
+                <input type="radio" name="rating" value="" checked>
+                {% for x in range(1, 6) %}
+                  <input type="radio" name="rating" value="{{ x }}"><span>{{ x }}</span>
+                {% endfor %}
+              </div>
+            </label>
+
+            <input type="submit" value="Submit Review">
+          </form>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
