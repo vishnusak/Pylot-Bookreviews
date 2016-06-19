@@ -108,9 +108,11 @@ main{
           .right>form>label .book_rating>input[type='radio']{
             width: auto;
           }
+            .book_rating>input[type='radio']:first-of-type{
+              display: none;
+            }
             .book_rating>input[type='radio']:default{
               display: none;
-              opacity: 0;
             }
       .right>form>input[type='submit']{
         display: block;

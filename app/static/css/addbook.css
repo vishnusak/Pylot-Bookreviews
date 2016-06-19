@@ -70,9 +70,11 @@ main{
             .rating>input[type='radio']{
               width: auto;
             }
+              .rating>input[type='radio']:first-of-type{
+                display: none;
+              }
               .rating>input[type='radio']:default{
                 display: none;
-                opacity: 0;
               }
         input[type='submit']{
           display: block;
